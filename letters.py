@@ -2,6 +2,8 @@ import sys
 import mmap
 import thread
 from itertools import permutations
+import multiprocessing 
+
 
 word = sys.argv[1]
 
@@ -19,12 +21,10 @@ def lookForWords(length, dictionary):
             print str(length) + ":" + word
 
 
-try:
-    thread.start_new_thread (lookForWords, (6,"dictionary6.txt") )
-    thread.start_new_thread (lookForWords, (7,"dictionary7.txt") )
-    thread.start_new_thread (lookForWords, (8,"dictionary8.txt") )
-    thread.start_new_thread (lookForWords, (9,"dictionary9.txt") )
-except:
-    print "nope"
-while 1:
-    pass
+if __name__ == '__main__':
+    jobs = []
+    for x in range (6,10):
+        p = multiprocessing.Process(target=lookForWords, args=(x,"dictionary"+str(x)+".txt"))
+        jobs.append(p)
+        p.start()
+
