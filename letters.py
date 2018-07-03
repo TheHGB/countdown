@@ -13,7 +13,7 @@ def lookForWords(length, dictionary):
     f = open(dictionary)
     text = f.read().strip().split()
     words = set(text) & anagrams
-    print str(length)+":"+str(list(words))
+    print str(length)+":"+", ".join(list(words))
 
 if __name__ == '__main__':
     jobs = []
