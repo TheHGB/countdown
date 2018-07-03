@@ -1,6 +1,4 @@
 import sys
-import mmap
-import thread
 from itertools import permutations
 import multiprocessing 
 
@@ -10,16 +8,12 @@ word = sys.argv[1]
 
 def lookForWords(length, dictionary):
     global word
-    anagrams = []
-    anagrams = list(set([''.join(w) for w in permutations(word,length)]))
+    anagrams = set([''.join(w) for w in permutations(word,length)])
 
     f = open(dictionary)
     text = f.read().strip().split()
-    s = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
-    for word in anagrams:
-        if word in text:
-            print str(length) + ":" + word
-
+    words = set(text) & anagrams
+    print str(length)+":"+str(list(words))
 
 if __name__ == '__main__':
     jobs = []
